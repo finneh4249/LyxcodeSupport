@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta content="favicon/ms-icon-310x310.png" property="og:image" />
+    <meta content="#ff986a" data-react-helmet="true" name="theme-color" />
+    <meta name="description" content="Common Discord.JS errors specific to the Lyxcode Support" />
+    <meta name="author" content="errors.aometry.com" />
+    <title>Lyxcode Common Errors</title>>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/prism.css" rel="stylesheet" />>
+    <link rel="stylesheet" href="node_modules/bootstrap-steps/dist/bootstrap-steps.min.css" />
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <div class="container px-4">
+            <a class="navbar-brand" href="#page-top"><strong>Lyxcode Support</strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#commonErrors">Common Errors</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Header-->
+    <header class="bg-altvote bg-gradient text-white">
+        <div class="container px-4 text-center">
+            <h1 class="fw-bolder" style="color: #333434;">Lyxcode Support</h1>
+            <p class="lead" style="color: #333434;">Common Errors & Resources</p>
+            <!-- <a class="btn btn-lg btn-light" href="#about">Learn More</a> -->
+        </div>
+    </header>
+    <!-- About section-->
+    <section id="commonErrors">
+        <div class="container px-4">
+            <div class="row gx-4 justify-content-center">
+                <div class="col-lg-8">
+                    <h2>Common Errors</h2>
+                    <p class="lead">During the development of a discord.js bot, especially by inexperienced developers,
+                        errors often occur. These errors usually appear frequently during the early stages of the
+                        development process.</p>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="permissions">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    0.permissions: Must be 10 or fewer in length.
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p> <strong>Error</strong>
+                                        <br>
+                                        If your console is showing:
+                                    <pre><code class="language-js">DiscordAPIError: Invalid Form Body
+0.permissions: Must be 10 or fewer in length.</code></pre>
+                                    <br>
+                                    This is because in your discord server there are more than 10 roles with the
+                                    specified permission you used in your command.
+                                    E.g <code> "ADMINISTRATOR" </code>
+                                    <br>
+                                    The number <code>0</code> as showed in this example refers to the first command from
+                                    top to bottom in your commands folder.
+                                    <br>
+                                    You may also filter out the first 10 roles to avoid the error. This will let 10
+                                    roles work but the rest will not have permission to use the command.<br>
+                                    <strong>Fix</strong><br>
+                                    Code by KevinFoged.
+                                    Replace the line in your command handler where you filter roles to the following:
+                                    <pre><code class="language-js"> return MainGuild.roles.cache.filter((r) => r.permissions.has(command.permission) && !r.managed).first(10);</code> </pre>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="typeError">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    TypeError
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        <h3>Error </h3>
+                                    <pre><code class="language-js">client.commands.set(....)
+TypeError: Cannot read property 'set' of undefined</code></pre>
+                                    This error usually occurs when the <code>client.commands</code> collection is not
+                                    defined in your <code>index.js</code> file
+                                    <strong>Fix</strong><br>
+                                    Add the following line to your <code>index.js</code> file.
+                                    <pre><code class="language-js">client.commands = new Collection();</code></pre>
+                                    </p>
+<br>
+                                    <p>
+                                        <h3>Error </h3>
+                                    <pre><code class="language-js">TypeError: (intermediate value) is not a function</code></pre>
+                                    <strong>OR</strong>
+                                    <pre><code class="language-js">TypeError: Cannot read properties of undefined (reading 'forEach')</code></pre>
+                                    Read which line of code it mentions above the error in the terminal. The error happens because the line most likely starts with a ( or [, and the line of code before it doesn't end with a semicolon. Semicolons are optional, except when they're not. The following video will explain what I stated above with a couple of examples at around 5:17, but I recommend you watch the entire video.
+<br>
+                                    If you are getting this error while following the event handler tutorial, you therefore most likely just forgot a semicolon on the line above it:
+                                    <strong>Fixes</strong><br>
+                                    <pre><code class="language-js">// INCORRECT:
+const Table = new Ascii("Events Loaded")
+(await PG(`${process.cwd()}/Events/*/*.js`))
+
+ // CORRECT:
+const Table = new Ascii("Events Loaded"); // Semicolon to the rescue!
+(await PG(`${process.cwd()}/Events/*/*.js`))</code></pre>
+<strong>OR</strong>
+<pre><code class="language-js">// INCORRECT:
+    client.commands = new Collection()
+    
+    ["Events", "Commands"].forEach(handler => {
+        require(`./Handlers/${handler}`)(client, PG, Ascii);
+    });
+    
+    // CORRECT:
+    client.commands = new Collection();
+    
+    ["Events", "Commands"].forEach(handler => {
+        require(`./Handlers/${handler}`)(client, PG, Ascii);
+    });</code></pre>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="referenceErrorUndefined">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    ReferenceError: myVariable is not defined.
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    Can occur if:
+                                    <ol>
+                                        <li>Your variable is not declared/defined.</li>
+                                        <li>You are trying to access a variable that's not available in the scope.</li>
+                                    </ol>
+                                    For further information:<br>
+                                    <a
+                                        href="http://https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Not_defined</a>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="syntaxAwait">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                    SyntaxError: await is only valid in async functions and the top level bodies of
+                                    modules.
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p>
+                                        <strong>Error</strong>
+                                    <pre><code class="language-js">SyntaxError: await is only valid in async functions and the top level bodies of modules.</code></pre>
+                                    <strong>Fix</strong><br>
+                                    Make your function an async function by adding <code>async</code> to the beginning of your function declaration (usually your execute function)
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+                                   More coming soon
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <strong> Currently updating this page manually, more will be available soon.</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container px-4">
+            <p class="m-0 text-center text-white">Copyright &copy; Lyxcode Support 2021 - 2022</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script src="js/prism.js"></script>
+</body>
+
+</html>
